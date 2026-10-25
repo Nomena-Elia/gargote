@@ -7,3 +7,17 @@
 2. 
 - On peut avoir deux plats avec est_plat_du_jour TRUE
 - On n'aurait pas les informations sur les plats du jour des jours precedents
+
+### 1.2 Donnees de test
+3. 
+- Plat a 0 Ar:
+```
+ERROR:  new row for relation "plat" violates check constraint "positive_prix"
+DETAIL:  Failing row contains (16, Tsy mety, 0, 4, t, null).
+
+```
+- Plat dont le nom existe
+```
+ERROR:  duplicate key value violates unique constraint "unique_nom"
+DETAIL:  Key (nom)=(mokary) already exists.
+```
