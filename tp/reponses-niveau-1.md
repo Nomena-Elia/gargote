@@ -21,3 +21,7 @@ DETAIL:  Failing row contains (16, Tsy mety, 0, 4, t, null).
 ERROR:  duplicate key value violates unique constraint "unique_nom"
 DETAIL:  Key (nom)=(mokary) already exists.
 ```
+
+### 1.3 Le modele PlatModel
+
+### 1.4 Filtre les plats disponibles

@@ -15,11 +15,12 @@ class PlatModel extends Model
         'id'           => 'int',
         'prix'         => 'int',
         'id_categorie' => 'int',
+        'disponible' => 'boolean'
     ];
 
     // Seuls ces champs peuvent être écrits par insert() / update().
     // Un champ ajouté dans la table doit AUSSI être ajouté ici.
-    protected $allowedFields = ['nom', 'prix', 'id_categorie'];
+    protected $allowedFields = ['nom', 'prix', 'id_categorie', 'description', 'disponible'];
 
     // Règles de validation : vérifiées automatiquement avant insert() / update().
     // Liste des règles disponibles :
