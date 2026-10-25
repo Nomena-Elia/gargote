@@ -7,6 +7,8 @@ INSERT INTO plat (nom, prix, id_categorie) VALUES
 ('godrogodro', 500, 4),
 ('menakely', 300, 4);
 
+UPDATE plat SET disponible = false WHERE id = 15;
+
 UPDATE plat SET description = 'Petits gâteaux traditionnels à base de farine de riz et de sucre, cuits dans un moule spécifique, parfaits pour le petit-déjeuner.' WHERE id = 11;
 
 UPDATE plat SET description = 'Spécialité traditionnelle à base de pâte de riz, de cacahuètes concassées et de cassonade, enveloppée et cuite dans des feuilles de bananier.' WHERE id = 12;

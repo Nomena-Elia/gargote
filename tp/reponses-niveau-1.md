@@ -29,3 +29,32 @@ CURL pour tester:
 ```bash
 curl -iX GET 'http://localhost:8080/api/plats?disponible=1'
 ```
+
+### 1.5 Le plat du jour
+CURLs:
+- GET
+```bash
+curl -iX GET 'http://localhost:8080/api/plat-du-jour'
+```
+- Historique
+```bash
+curl -iX GET 'http://localhost:8080/api/plat-du-jour/historique'
+```
+
+- Plat inexistant
+```bash
+curl -iX PUT 'http://localhost:8080/api/plat-du-jour' -H 'Content-Type: application/json' -d '{"id_plat": 444}'
+```
+
+- Plat epuise
+```bash
+curl -iX PUT 'http://localhost:8080/api/plat-du-jour' -H 'Content-Type: application/json' -d '{"id_plat": 15}'
+```
+
+- Mety
+```bash
+curl -iX PUT 'http://localhost:8080/api/plat-du-jour' -H 'Content-Type: application/json' -d '{"id_plat": 3}'
+```
+
+4. R2 renvoie 409 car il peut avoir un conflit de donnees. 422 indique que les donnees sont invalides. Pourtant, les donnees saisies peuvent bien etre valides, mais elles peuvent causer de conflit: Plat epuise dans le plat du jour.
+5. Si bao marque comme epuise le plat qui est deja plat du jour, on marque juste epuise sur le plat du jour, et Bao peut le changer apres. Il n'y a pas d'erreur car c'est vraiment possible. Et en plus, si on supprime tout de suite le plat du jour lorsqu'il est marque epuise, cela va apporter des confusions a Bao. Donc, le comportement que je propose c'est juste donner un avertissement a Bao que le plat du jour est epuise.

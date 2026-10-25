@@ -7,3 +7,5 @@ CREATE TABLE plat_du_jour (
     date_jour DATE PRIMARY KEY,
     id_plat INTEGER NOT NULL REFERENCES plat(id)
 );
+
+ALTER TABLE plat_du_jour ALTER COLUMN date_jour SET DEFAULT CURRENT_DATE;
