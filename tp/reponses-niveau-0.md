@@ -69,3 +69,16 @@ curl -iX POST 'http://localhost:8080/api/commandes' -H 'Content-Type: applicatio
 9. quantite est un attribut d'un props. Le composant ne modifie pas le props lui meme, car les props sont des donnees recues du parent. Donc, il emet des evenements `plus` et `moins`, et c'est le parent qui ecoute cet evenement qui passe les donnees (donc la quantite) par props.
 
 10. Le watch sert a surveiller le changement de la variable props.plat, et change les donnees de la formulaire pour la faire correspondre a la valeur nouvelle de props.plat a chaque changement. Si on clique sur modifier d'un autre plat  sans watch, la formulaire ne s'actualise pas. 
+
+## 0.6 Premieres modifications
+11. 
+- Le composant concerne est le PlatForm.vue ( + CarteView.vue)
+- Dans le CarteView.vue, il y a la fonction charger, qui recupere la liste des plats et des categories.
+- Cette fonction charger est appele lorsque le composant apparait (onMounted)
+- Cette fonction appelle categories.lister dans api.js
+- L'api.js renvoie une requete vers /api/categories
+- Vite transmet la requete vers l'origin localhost:8080
+- L'api /api/categories arrive dans le controller backend Categories.php, qui recupere les donnees et les renvoie au format JSON.
+- Lorsque les donnees sont arrivees dans CarteView.vue, le composant transmet les categories dans PlatForm par props.
+
+Donc la categorie apparait dans la liste car la route suivie recupere les donnees en base de donnees.
