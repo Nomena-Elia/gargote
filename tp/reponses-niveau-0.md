@@ -53,3 +53,19 @@ curl -iX POST 'http://localhost:8080/api/commandes' -H 'Content-Type: applicatio
 | 9 | L’écran recharge la liste | `views/CarteView.vue` | `surEnregistrement()` |
 
 8. Le code metier de la creation d'une commande est dans Services/CommandeService.php. Il n'est pas dans le controleur parce que le controleur gere les requetes et les reponses HTTP, tandis que le service fait la logique metier.
+
+## 0.5 Reperer les notions de Vue
+| Notion | À quoi ça sert | Votre exemple |
+|---|---|---|
+| `ref()` | une variable dont le changement met l’écran à jour | Fichier `views/CarteView.vue`, ligne `const plats = ref([])`. On met une liste vide dans une variable reactive que Vue detectera a chaque changement. |
+| `computed()` | une valeur calculée à partir d’autres, recalculée automatiquement | Fichier `views/CommandeView.vue`, ligne `const groupes = computed(() => parCategorie(plats.value))`. A chaque fois que plats.value change, on recalcule le regroupement par categorie. |
+| `v-for` | répéter un élément pour chaque élément d’une liste | Fichier `views/CommandeView.vue`, ligne `<li v-for="plat in liste" :key="plat.id">`. On boucle sur liste |
+| `v-if` / `v-else` | afficher un élément seulement si une condition est vraie | Fichier `views/CommandeView.vue`, Ligne `<small v-if="erreurs.numero_table" class="erreur">{{ erreurs.numero_table }}</small>`. Si erreurs.numero_table existe, on l'affiche |
+| `v-model` | lier un champ de formulaire à une variable, dans les deux sens | Ficheir `views/CommandeView.vue`, ligne `<input v-model.number="numeroTable" type="number" min="1" />`. On lie ce champ a la variable `numeroTable` |
+| `defineProps` | recevoir des données du composant parent | `components/CommandeDetail.vue`, ligne `defineProps({commande: { type: Object, required: true },})`. On definit l'attribut commande. |
+| `defineEmits` / `emit` | envoyer un événement au composant parent | Fichier `components/PlatForm.vue`, ligne `const emit = defineEmits(['enregistre', 'annule'])`. On definit l'evenement avec le nom `enregistre` |
+| `onMounted` | exécuter du code quand le composant apparaît | Fichier `views/CarteView.vue`, ligne `onMounted(charger)`. Lorsque ce composant apparait, executer la fonction `charger` |
+
+9. quantite est un attribut d'un props. Le composant ne modifie pas le props lui meme, car les props sont des donnees recues du parent. Donc, il emet des evenements `plus` et `moins`, et c'est le parent qui ecoute cet evenement qui passe les donnees (donc la quantite) par props.
+
+10. Le watch sert a surveiller le changement de la variable props.plat, et change les donnees de la formulaire pour la faire correspondre a la valeur nouvelle de props.plat a chaque changement. Si on clique sur modifier d'un autre plat  sans watch, la formulaire ne s'actualise pas. 
