@@ -25,3 +25,7 @@ DETAIL:  Key (nom)=(mokary) already exists.
 ### 1.3 Le modele PlatModel
 
 ### 1.4 Filtre les plats disponibles
+CURL pour tester:
+```bash
+curl -iX GET 'http://localhost:8080/api/plats?disponible=1'
+```
