@@ -38,3 +38,18 @@ return $this->erreur('Ce plat figure déjà dans des commandes, il ne peut pas �
 curl -iX POST 'http://localhost:8080/api/commandes' -H 'Content-Type: application/json' -d '{"numero_table":"6","lignes":[{"id_plat":"4","quantite":"2"},{"id_plat":"10","quantite":"1"}]}'
 
 ```
+
+## 0.4
+| # | Étape | Fichier | Fonction / ligne |
+|---|---|---|---|
+| 1 | Le formulaire est soumis | `components/PlatForm.vue` | `enregistrer()` |
+| 2 | La requête HTTP est construite | `api.js` | `requete()` |
+| 3 | Vite transmet `/api/...` au port 8080 | `vite.config.js` | `/api: http://localhost:8080` |
+| 4 | CodeIgniter choisit le contrôleur | `app/Config/Routes.php` | `$routes->post('plats', 'Plats::create');` |
+| 5 | Le contrôleur lit le JSON | `app/Controllers/Api/Plats.php` | `$donnees = $this->donneesJson();` |
+| 6 | Les règles de validation sont vérifiées | `app/Models/PlatModel.php` + Le controller precedent | `$validationRules = ...` + `function insert du modele` |
+| 7 | La ligne est insérée | `app/Controllers/Api/Plats.php` | `return $this->respondCreated($this->plats->find($id));` |
+| 8 | Le formulaire prévient l’écran parent | `components/PlatForm.vue` | `emit(…)` |
+| 9 | L’écran recharge la liste | `views/CarteView.vue` | `surEnregistrement()` |
+
+8. Le code metier de la creation d'une commande est dans Services/CommandeService.php. Il n'est pas dans le controleur parce que le controleur gere les requetes et les reponses HTTP, tandis que le service fait la logique metier.
