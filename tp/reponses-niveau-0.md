@@ -82,3 +82,5 @@ curl -iX POST 'http://localhost:8080/api/commandes' -H 'Content-Type: applicatio
 - Lorsque les donnees sont arrivees dans CarteView.vue, le composant transmet les categories dans PlatForm par props.
 
 Donc la categorie apparait dans la liste car la route suivie recupere les donnees en base de donnees.
+
+VITA
