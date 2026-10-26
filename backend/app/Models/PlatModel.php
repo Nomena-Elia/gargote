@@ -26,19 +26,26 @@ class PlatModel extends Model
     // Liste des règles disponibles :
     // https://codeigniter.com/user_guide/libraries/validation.html#available-rules
     protected $validationRules = [
-        'nom'          => 'required|max_length[100]',
-        'prix'         => 'required|integer',
-        'id_categorie' => 'required|integer',
+        'id' => 'permit_empty|is_natural_no_zero',
+        'nom'          => 'required|max_length[100]|min_length[2]|is_unique[plat.nom,id,{id}]',
+        'prix'         => 'required|integer|greater_than[0]|less_than_equal_to[100000]',
+        'id_categorie' => 'required|integer|is_not_unique[categorie.id]',
+        'description' => 'permit_empty|max_length[255]',
+        'disponible' => 'is_boolean'
     ];
 
     protected $validationMessages = [
         'nom' => [
             'required'   => 'Le nom du plat est obligatoire.',
             'max_length' => 'Le nom ne doit pas dépasser 100 caractères.',
+            'min_length' => 'Le nom doit avoir au moins 2 caracteres.',
+            'is_unique' => 'Un plat avec ce nom existe deja.'
         ],
         'prix' => [
             'required' => 'Le prix est obligatoire.',
             'integer'  => 'Le prix doit être un nombre entier (en Ariary).',
+            'greater_than' => 'Le prix doit etre positif',
+            'less_than_equal_to' => 'Le prix doit etre inferieur ou egal a 100000 Ar.'
         ],
         'id_categorie' => [
             'required' => 'Choisissez une catégorie.',

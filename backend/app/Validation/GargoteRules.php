@@ -30,4 +30,15 @@ class GargoteRules
 
         return false;
     }
+
+    public function is_boolean($value, ?string &$error = null): bool {
+        $accepted = [
+            true, false, 0, 1, "0", "1"
+        ];
+        $ok = in_array($value, $accepted, true);
+        if(!$ok) {
+            $error = "La valeur doit etre un booleen.";
+        }
+        return $ok;
+    }
 }
