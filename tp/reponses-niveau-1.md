@@ -84,3 +84,224 @@ curl -X POST http://localhost:8080/api/plats \
     "disponible": "oui"
   }'
 ```
+
+### 1.7 Jeu de tests
+- POST /api/plats (Nom existant)
+```bash
+curl -iX POST http://localhost:8080/api/plats \
+  -H "Content-Type: application/json" \
+  -d '{"nom":"Café","prix":1000,"id_categorie":3}'
+```
+    - Reponse:
+  ```
+  HTTP/1.1 422 Unprocessable Content
+Host: localhost:8080
+Date: Mon, 26 Oct 2026 10:36:57 GMT
+Connection: close
+X-Powered-By: PHP/8.4.27
+Cache-Control: no-store, max-age=0, no-cache
+Content-Type: application/json; charset=UTF-8
+Debugbar-Time: 1793011017.583011
+Debugbar-Link: http://localhost:8080/index.php?debugbar_time=1793011017.583011
+
+{
+    "message": "Données invalides.",
+    "errors": {
+        "nom": "Un plat avec ce nom existe deja.",
+        "disponible": "La valeur doit etre un booleen."
+    }
+}
+  ```
+
+- PUT /api/plats/4
+```bash
+curl -iX PUT http://localhost:8080/api/plats/4 \
+  -H "Content-Type: application/json" \
+  -d '{"nom":"Romazava","prix":7500}'
+```
+
+  - Reponses:
+```
+HTTP/1.1 200 OK
+Host: localhost:8080
+Date: Mon, 26 Oct 2026 10:37:47 GMT
+Connection: close
+X-Powered-By: PHP/8.4.27
+Cache-Control: no-store, max-age=0, no-cache
+Content-Type: application/json; charset=UTF-8
+Debugbar-Time: 1793011067.392116
+Debugbar-Link: http://localhost:8080/index.php?debugbar_time=1793011067.392116
+
+{
+    "id": 4,
+    "nom": "Romazava",
+    "prix": 7500,
+    "id_categorie": 1,
+    "disponible": true,
+    "description": null
+}  
+```   
+
+- POST /api/plats (Prix 0)
+```bash
+curl -iX POST http://localhost:8080/api/plats \
+  -H "Content-Type: application/json" \
+  -d '{"nom":"Thé","prix":0,"id_categorie":3}'
+```
+    - Reponses
+```
+HTTP/1.1 422 Unprocessable Content
+Host: localhost:8080
+Date: Mon, 26 Oct 2026 10:39:16 GMT
+Connection: close
+X-Powered-By: PHP/8.4.27
+Cache-Control: no-store, max-age=0, no-cache
+Content-Type: application/json; charset=UTF-8
+Debugbar-Time: 1793011156.709374
+Debugbar-Link: http://localhost:8080/index.php?debugbar_time=1793011156.709374
+
+{
+    "message": "Données invalides.",
+    "errors": {
+        "prix": "Le prix doit etre positif"
+    }
+}
+```
+
+- POST api/plats (id_categorie)
+```bash
+curl -iX POST http://localhost:8080/api/plats \
+  -H "Content-Type: application/json" \
+  -d '{"nom":"Thé","prix":500,"id_categorie":99}'
+```
+    - Reponses
+```
+HTTP/1.1 422 Unprocessable Content
+Host: localhost:8080
+Date: Mon, 26 Oct 2026 10:40:34 GMT
+Connection: close
+X-Powered-By: PHP/8.4.27
+Cache-Control: no-store, max-age=0, no-cache
+Content-Type: application/json; charset=UTF-8
+Debugbar-Time: 1793011234.887660
+Debugbar-Link: http://localhost:8080/index.php?debugbar_time=1793011234.887660
+
+{
+    "message": "Données invalides.",
+    "errors": {
+        "id_categorie": "Cette categorie est inexistante"
+    }
+}
+```
+
+- PUT /api/plats/7 (422)
+```bash
+curl -iX PUT http://localhost:8080/api/plats/7 \
+  -H "Content-Type: application/json" \
+  -d '{"disponible":"oui"}'
+```
+
+    - Reponses
+```
+HTTP/1.1 422 Unprocessable Content
+Host: localhost:8080
+Date: Mon, 26 Oct 2026 10:41:12 GMT
+Connection: close
+X-Powered-By: PHP/8.4.27
+Cache-Control: no-store, max-age=0, no-cache
+Content-Type: application/json; charset=UTF-8
+Debugbar-Time: 1793011272.070061
+Debugbar-Link: http://localhost:8080/index.php?debugbar_time=1793011272.070061
+
+{
+    "message": "Données invalides.",
+    "errors": {
+        "disponible": "La valeur doit etre un booleen."
+    }
+}
+```
+
+- PUT /api/plats/7
+```bash
+curl -iX PUT http://localhost:8080/api/plats/7 \
+  -H "Content-Type: application/json" \
+  -d '{"disponible":false}'
+```
+    - Reponses
+```
+HTTP/1.1 200 OK
+Host: localhost:8080
+Date: Mon, 26 Oct 2026 10:45:13 GMT
+Connection: close
+X-Powered-By: PHP/8.4.27
+Cache-Control: no-store, max-age=0, no-cache
+Content-Type: application/json; charset=UTF-8
+Debugbar-Time: 1793011513.538772
+Debugbar-Link: http://localhost:8080/index.php?debugbar_time=1793011513.538772
+
+{
+    "id": 7,
+    "nom": "Mi sao",
+    "prix": 6500,
+    "id_categorie": 2,
+    "disponible": false,
+    "description": null
+}
+```
+
+- PUT /api/plat-du-jour
+```bash
+curl -iX PUT http://localhost:8080/api/plat-du-jour \
+  -H "Content-Type: application/json" \
+  -d '{"id_plat":7}'
+```
+    - Reponses
+```
+HTTP/1.1 409 Conflict
+Host: localhost:8080
+Date: Mon, 26 Oct 2026 10:45:57 GMT
+Connection: close
+X-Powered-By: PHP/8.4.27
+Cache-Control: no-store, max-age=0, no-cache
+Content-Type: application/json; charset=UTF-8
+Debugbar-Time: 1793011557.076997
+Debugbar-Link: http://localhost:8080/index.php?debugbar_time=1793011557.076997
+
+{
+    "message": "Plat epuise",
+    "errors": {
+        "id_plat": "Ce plat est deja epuise"
+    }
+}
+```
+
+- GET /api/plats?categorie=2&disponible=1
+```bash
+curl -iX GET 'http://localhost:8080/api/plats?categorie=2&disponible=1' 
+```
+    - Reponses
+```
+HTTP/1.1 200 OK
+Host: localhost:8080
+Date: Mon, 26 Oct 2026 10:46:31 GMT
+Connection: close
+X-Powered-By: PHP/8.4.27
+Cache-Control: no-store, max-age=0, no-cache
+Content-Type: application/json; charset=UTF-8
+Debugbar-Time: 1793011591.899734
+Debugbar-Link: http://localhost:8080/index.php?debugbar_time=1793011591.899734
+
+[
+    {
+        "id": 6,
+        "nom": "Soupe chinoise",
+        "prix": 6000,
+        "id_categorie": 2,
+        "disponible": true,
+        "description": null,
+        "categorie": "Soupe"
+    }
+]
+```
+
+6. Avant is_not_unique, c'est postgres qui detextait l'erreur. C'est un probleme de laisser PostgreSQL la detecter seule car on devait donc gerer l'affichage de l'erreur manuellement.

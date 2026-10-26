@@ -31,7 +31,7 @@ class PlatModel extends Model
         'prix'         => 'required|integer|greater_than[0]|less_than_equal_to[100000]',
         'id_categorie' => 'required|integer|is_not_unique[categorie.id]',
         'description' => 'permit_empty|max_length[255]',
-        'disponible' => 'is_boolean'
+        'disponible' => 'is_boolean|permit_empty'
     ];
 
     protected $validationMessages = [
@@ -49,6 +49,7 @@ class PlatModel extends Model
         ],
         'id_categorie' => [
             'required' => 'Choisissez une catégorie.',
+            'is_not_unique' => 'Cette categorie est inexistante'
         ],
     ];
 
